@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#171311">
+<title>ALIAS — объясни слово</title>
+<style>
+:root{color-scheme:dark;--bg:#171311;--panel:#241e1a;--panel2:#302720;--gold:#e8b86b;--cream:#f6eddf;--muted:#b8a99a;--line:#493b30;--red:#d77c67;--green:#8bbf91}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#493426 0,#211a16 42%,#14110f 100%);color:var(--cream);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;border:0;color:inherit}.app{max-width:760px;margin:auto;padding:20px 18px calc(30px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;justify-content:space-between;margin:6px 0 24px}.brand{font-weight:950;letter-spacing:.16em;font-size:23px}.brand span{color:var(--gold)}.tag{font-size:11px;color:var(--muted);letter-spacing:.13em;text-transform:uppercase}
+h1{font-size:clamp(28px,7vw,42px);line-height:1.04;margin:0 0 10px;letter-spacing:-.04em}h2{font-size:21px;margin:0 0 14px}.sub{color:var(--muted);line-height:1.5;margin:0 0 22px}.panel{background:linear-gradient(145deg,rgba(53,43,35,.96),rgba(35,29,25,.96));border:1px solid var(--line);border-radius:22px;padding:19px;margin:14px 0;box-shadow:0 14px 40px #0003}.field-label{display:block;font-size:12px;color:var(--muted);margin:0 0 9px;letter-spacing:.06em;text-transform:uppercase}.seg{display:flex;gap:8px}.seg button,.chip,.secondary{background:#201a16;border:1px solid var(--line);border-radius:13px;padding:12px 14px;color:var(--muted);flex:1}.seg button.active,.chip.active{background:#59432d;border-color:var(--gold);color:#fff2dc}.primary{width:100%;padding:16px 20px;border-radius:16px;background:linear-gradient(135deg,#f0c77e,#bd8747);color:#21170e;font-weight:850;font-size:16px;box-shadow:0 8px 22px #bd874733}.primary:active,.secondary:active{transform:scale(.985)}.secondary{flex:none;padding:12px 15px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.grid .chip{font-size:13px;padding:11px 7px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.counter{display:flex;align-items:center;gap:12px}.counter button{width:38px;height:38px;border-radius:12px;background:#201a16;border:1px solid var(--line);font-size:20px}.counter strong{min-width:25px;text-align:center;font-size:19px}.players{display:grid;gap:8px}.player-input{width:100%;padding:13px 14px;border:1px solid var(--line);background:#1c1714;color:var(--cream);border-radius:12px;outline:none}.player-input:focus{border-color:var(--gold)}.muted{color:var(--muted)}.hidden{display:none!important}.topline{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-bottom:13px}.timer{font-size:28px;font-weight:850;color:var(--gold);font-variant-numeric:tabular-nums}.timer.low{color:var(--red)}.progress{height:5px;background:#15110f;border-radius:10px;overflow:hidden;margin:12px 0 20px}.progress i{display:block;height:100%;width:100%;background:var(--gold);transition:width .3s}.word-card{min-height:290px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(circle at 50% 30%,#5b432e,#30251d 70%);border:1px solid #80603b;border-radius:26px;padding:28px;margin:14px 0 18px}.word{font-size:clamp(38px,11vw,64px);font-weight:900;letter-spacing:-.04em;overflow-wrap:anywhere}.word-hint{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#d9b985;margin-bottom:18px}.play-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.correct{background:#294332;border:1px solid #527b59;color:#d9f1dc}.skip{background:#3c2924;border:1px solid #70483d;color:#f2c5b8}.play-actions button{border-radius:15px;padding:16px 10px;font-weight:750}.wide{grid-column:1/-1}.score-list{display:grid;gap:9px}.score-row{display:flex;justify-content:space-between;align-items:center;background:#1d1815;padding:12px 14px;border-radius:12px}.score-row b{color:var(--gold)}.pill{border:1px solid var(--line);border-radius:30px;padding:6px 10px;color:var(--muted);font-size:12px}.modal-back{position:fixed;inset:0;background:#000b;display:grid;place-items:end center;padding:16px;z-index:5}.modal{width:min(100%,520px);background:#28211c;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 20px 80px #0008}.modal h2{margin-bottom:8px}.choice-list{display:grid;gap:8px;margin:18px 0}.choice-list button{padding:14px;background:#1c1714;border:1px solid var(--line);border-radius:12px;text-align:left}.choice-list button:active{border-color:var(--gold)}.footer-note{text-align:center;color:#8f8174;font-size:11px;margin:18px 0 0}
+@media(min-width:600px){.app{padding-top:32px}.panel{padding:23px}.word-card{min-height:340px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand">AL<span>I</span>AS</div><div class="tag">Объясни. Угадай. Победи.</div></header>
+<main id="setup">
+<h1>Слова — это<br><span style="color:var(--gold)">целое приключение.</span></h1>
+<p class="sub">Соберите компанию, выберите категории и объясняйте слова на время.</p>
+<section class="panel">
+<label class="field-label">Режим игры</label>
+<div class="seg" id="modeSeg"><button class="active" data-mode="solo">Каждый за себя</button><button data-mode="teams">Команды</button></div>
+<div id="teamOptions" class="hidden" style="margin-top:16px"><label class="field-label">Количество команд</label><div class="seg" id="teamSeg"><button class="active" data-teams="2">2</button><button data-teams="3">3</button><button data-teams="4">4</button></div></div>
+</section>
+<section class="panel">
+<div class="two">
+<div><label class="field-label">Игроков</label><div class="counter"><button id="minus">−</button><strong id="count">3</strong><button id="plus">+</button></div></div>
+<div><label class="field-label">Время раунда</label><div class="seg" id="timeSeg"><button data-time="30">30</button><button class="active" data-time="45">45</button><button data-time="60">60</button></div></div>
+</div>
+<div style="margin-top:18px"><label class="field-label">Имена игроков</label><div class="players" id="players"></div></div>
+</section>
+<section class="panel">
+<label class="field-label">Сложность слов</label>
+<div class="seg" id="difficultySeg"><button class="active" data-difficulty="easy">Лёгкая</button><button data-difficulty="medium">Средняя</button><button data-difficulty="hard">Сложная</button></div>
+<div style="margin-top:19px"><label class="field-label">Категории — можно выбрать несколько</label><div class="grid" id="categories"></div></div>
+<p class="muted" style="font-size:12px;margin:13px 0 0">«Общая категория» — случайные повседневные слова из самых разных областей.</p>
+</section>
+<button class="primary" id="start">Начать игру →</button>
+<p class="footer-note">Своя игра для вашей компании · без регистрации</p>
+</main>
+<main id="game" class="hidden">
+<div class="topline"><span id="turnLabel">Ход 1</span><span class="pill" id="roundLabel">Раунд 1 из 3</span><span class="timer" id="timer">00:45</span></div>
+<div class="progress"><i id="timeBar"></i></div>
+<div class="topline"><span id="activeLabel">Объясняет: —</span><span id="scoreMini">0 очков</span></div>
+<div class="word-card"><div class="word-hint" id="categoryHint">Общая категория</div><div class="word" id="word">СОЛНЦЕ</div></div>
+<div class="play-actions">
+<button class="correct" id="correct">✓ Угадали</button><button class="skip" id="skip">↷ Пропустить</button>
+<button class="secondary wide" id="pause">Ⅱ Пауза</button>
+<button class="secondary wide" id="endTurn">Завершить ход</button>
+</div>
+<section class="panel"><div class="topline"><b style="color:var(--cream)">Счёт</b><span id="modeLabel"></span></div><div class="score-list" id="scores"></div></section>
+</main>
+<main id="results" class="hidden">
+<div class="tag" style="margin:22px 0 14px">Игра завершена</div><h1>Вот это<br><span style="color:var(--gold)">была битва!</span></h1><p class="sub" id="resultSub">Ваши результаты</p>
+<section class="panel"><h2>Итоговый счёт</h2><div class="score-list" id="finalScores"></div></section>
+<button class="primary" id="again">Сыграть ещё раз ↻</button>
+<button class="secondary wide" id="back" style="width:100%;margin-top:10px">Изменить настройки</button>
+</main>
+</div>
+<div id="modalRoot"></div>
+<script>
+const DATA={
+"Общая":{easy:"борщ|солнце|велосипед|подушка|отпуск|зонт|мороженое|снеговик|будильник|арбуз|чемодан|тапочки|радуга|самокат|пицца|свеча|котёнок|пылесос|подарок|качели|попкорн|пляж|варежки|кактус|кофе|шарик|ключи|платье|гитара|облако|кровать|фонарик|клубника|поезд|зеркало|торт|письмо|ракушка|мыло|шапка|телефон|карусель|суп|планета|сосиска|парашют|снегирь|книга|часы|пирог|аптека|пальто|лестница|шоколад|корабль|пингвин|чемпион|душ|варенье|перчатки|молния|двор|стакан|пельмени|бабочка|корона|диван|парк|батарейка|кукла|карандаш|салют|ведро|мандарин|космос|кресло|сапоги|мост|печенье|дракон|бассейн|сумка|шашлык|сирень|платок|лампа|сок|паровоз|рация|груша|песок|свитер|мяч|медаль|самолёт|пульт|расписание|гриб|пароход|подъезд|сироп|скейтборд|медуза|сосна|подарочная упаковка|кастрюля|пирожок|компас|снежинка|пижама|шампунь|свадьба|пикник|пароход|блин|глобус|сарай|пельмень|кафе|молоко|бензин|платформа|сковорода|птенец|сериал|чемоданчик|шлагбаум|кран|мороженое|пальма|кроссовки|дождевик|тележка|плюшевый мишка|доска|шарф|помидор|персик|кружка|лифт|скатерть|песочные часы|светофор|пароход|праздник|записка|бутерброд|фонтан|раскраска|пластилин|сосед|пожарный|планшет|сапфир|пирс|дождь|морковь|пижама|кукуруза|пельмени|комар|раковина|скрипка|перрон|пароход|пирс|трамвай|свечка|плед|рюкзак|снежок|фейерверк|гнездо|кнопка|пломбир|сосулька|чердак|дневник|пароход|варежка|помада|пазл|раковина|парус|конфета|градусник|телескоп|барабан|салфетка|пельмени|солнцезащитные очки".split("|"),
+medium:"вдохновение|компромисс|репутация|ностальгия|переговоры|интуиция|эксперимент|парадокс|традиция|привычка|впечатление|авантюра|равновесие|любопытство|предчувствие|дедлайн|иллюзия|импровизация|доверие|провокация|перемены|совпадение|возможность|ответственность|характер|самооценка|мечтатель|случайность|воспоминание|предательство|терпение|этикет|конкуренция|уверенность|разочарование|признание|сюрприз|репетиция|обещание|секрет|приключение".split("|"),
+hard:"прокрастинация|амбивалентность|диссонанс|абстракция|дискриминация|метафора|интерпретация|феномен|парадокс|эволюция|катализатор|дихотомия|консенсус|интроспекция|субъективность|ирония|утопия|деградация|интрига|манипуляция|компетенция|легитимность|перспектива|ассоциация|концепция|аллегория|апатия|эйфория|инерция|симбиоз".split("|")},
+"Еда":{easy:"пирог|сыр|каша|суп|банан|омлет|пельмени|салат|арбуз|шоколад".split("|"),medium:"карамелизация|маринад|дегустация|гарнир|фондю|суфле|ризотто".split("|"),hard:"ферментация|гастрономия|консоме|эмульсия|деконструкция блюда".split("|")},
+"Животные":{easy:"собака|кошка|слон|лиса|заяц|медведь|попугай|дельфин|жираф|ёж".split("|"),medium:"хамелеон|дикобраз|альпака|фламинго|выдра|барсук|пеликан".split("|"),hard:"ехидна|капибара|аксолотль|нарвал|тапир|манул|панголин".split("|")},
+"Путешествия":{easy:"самолёт|отель|пляж|чемодан|карта|поезд|палатка|экскурсия".split("|"),medium:"стыковка|акклиматизация|маршрут|паломничество|авиабилет|путеводитель".split("|"),hard:"транзит|экспедиция|визаран|геолокация|ориентирование".split("|")},
+"Профессии":{easy:"врач|учитель|повар|водитель|певец|строитель|пожарный|парикмахер".split("|"),medium:"архитектор|переводчик|режиссёр|кинолог|астроном|ювелир".split("|"),hard:"урбанист|сомелье|ихтиолог|палеонтолог|энтомолог".split("|")},
+"Кино и сериалы":{easy:"комедия|мультфильм|актёр|кинотеатр|сценарий|премьера".split("|"),medium:"саундтрек|камео|дубляж|трилогия|кастинг|клиффхэнгер".split("|"),hard:"мокьюментари|макгаффин|флешбэк|постпродакшн".split("|")},
+"Спорт":{easy:"футбол|мяч|лыжи|бассейн|бег|велосипед|теннис".split("|"),medium:"эстафета|марафон|пенальти|фристайл|турнир|триатлон".split("|"),hard:"десятиборье|керлинг|скелетон|паралимпиада|тай-брейк".split("|")},
+"Дом и быт":{easy:"швабра|диван|чайник|полотенце|пылесос|шторы|кастрюля".split("|"),medium:"увлажнитель|гладильная доска|органайзер|термостат|фурнитура".split("|"),hard:"диффузор|конвектор|фальшпол|индукционная панель".split("|")},
+"Технологии":{easy:"телефон|ноутбук|наушники|камера|робот|планшет".split("|"),medium:"нейросеть|подписка|облачное хранилище|алгоритм|беспроводная зарядка".split("|"),hard:"криптография|блокчейн|интерфейс|машинное обучение|квантовый компьютер".split("|")},
+"Музыка":{easy:"гитара|песня|пианино|барабан|концерт|микрофон".split("|"),medium:"импровизация|симфония|аранжировка|репетиция|вокализ".split("|"),hard:"контрапункт|полифония|аккордовая прогрессия|диссонанс".split("|")},
+"Природа":{easy:"лес|река|горы|цветок|гриб|радуга|водопад".split("|"),medium:"экосистема|затмение|ледник|миграция|роса|саванна".split("|"),hard:"биоразнообразие|фотосинтез|перигелий|архипелаг|мерзлота".split("|")},
+"Эмоции и действия":{easy:"радость|страх|танцевать|смеяться|удивление|обида".split("|"),medium:"сомневаться|восхищение|смущение|предвкушение|сочувствие".split("|"),hard:"самоирония|отрешённость|воодушевление|двусмысленность".split("|")},
+"История и мифы":{easy:"рыцарь|пирамида|дракон|король|замок|викинг".split("|"),medium:"мифология|археология|император|амфитеатр|легенда".split("|"),hard:"гелиоцентризм|геральдика|политеизм|ренессанс|эпос".split("|")}
+};
+const $=id=>document.getElementById(id);
+let cfg={mode:"solo",teams:2,count:3,time:45,difficulty:"easy",categories:["Общая"]},players=[],scores=[],teamScores=[],teamOf=[],used=new Set(),deck=[],deckIndex=0,turn=0,round=1,remaining=45,interval=null,paused=false,turnPoints=0,history=[];
+const categoryNames=Object.keys(DATA);
+function renderPlayers(){const root=$("players");root.innerHTML="";for(let i=0;i<cfg.count;i++){const input=document.createElement("input");input.className="player-input";input.placeholder="Игрок "+(i+1);input.maxLength=18;input.value=players[i]||"";input.addEventListener("input",()=>players[i]=input.value);root.append(input)}}
+function renderCategories(){const root=$("categories");root.innerHTML="";categoryNames.forEach(name=>{const b=document.createElement("button");b.className="chip"+(cfg.categories.includes(name)?" active":"");b.textContent=name==="Общая"?"Общая категория":name;b.onclick=()=>{if(cfg.categories.includes(name)){if(cfg.categories.length===1)return;cfg.categories=cfg.categories.filter(x=>x!==name)}else cfg.categories.push(name);renderCategories()};root.append(b)})}
+function setActive(group,attr,value){document.querySelectorAll("#"+group+" button").forEach(b=>b.classList.toggle("active",b.dataset[attr]===String(value)))}
+$("modeSeg").onclick=e=>{const b=e.target.closest("button[data-mode]");if(!b)return;cfg.mode=b.dataset.mode;setActive("modeSeg","mode",cfg.mode);$("teamOptions").classList.toggle("hidden",cfg.mode!=="teams")};
+$("teamSeg").onclick=e=>{const b=e.target.closest("button[data-teams]");if(!b)return;cfg.teams=+b.dataset.teams;setActive("teamSeg","teams",cfg.teams)};
+$("timeSeg").onclick=e=>{const b=e.target.closest("button[data-time]");if(!b)return;cfg.time=+b.dataset.time;setActive("timeSeg","time",cfg.time)};
+$("difficultySeg").onclick=e=>{const b=e.target.closest("button[data-difficulty]");if(!b)return;cfg.difficulty=b.dataset.difficulty;setActive("difficultySeg","difficulty",cfg.difficulty)};
+$("minus").onclick=()=>{if(cfg.count>2){cfg.count--;renderPlayers();$("count").textContent=cfg.count}};
+$("plus").onclick=()=>{if(cfg.count<8){cfg.count++;renderPlayers();$("count").textContent=cfg.count}};
+renderPlayers();renderCategories();
+function buildDeck(){const list=[];cfg.categories.forEach(cat=>{const source=DATA[cat];if(!source)return;(source[cfg.difficulty]||[]).forEach(w=>list.push({word:w,category:cat}))});for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}return list}
+function makeScores(){scores=players.map((name,i)=>({name,score:0}));teamOf=players.map((_,i)=>i%cfg.teams);teamScores=Array(cfg.teams).fill(0)}
+function startGame(){players=Array.from({length:cfg.count},(_,i)=>(players[i]||"").trim()||"Игрок "+(i+1));makeScores();used=new Set();deck=buildDeck();deckIndex=0;turn=0;round=1;history=[];if(deck.length<8){alert("В выбранных категориях мало слов. Выбери ещё категории.");return}show("game");$("modeLabel").textContent=cfg.mode==="solo"?"Личный зачёт":"Командный зачёт";nextTurn()}
+function show(id){["setup","game","results"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
+function nextWord(){if(deckIndex>=deck.length){deck=buildDeck();deckIndex=0}let item=deck[deckIndex++];let attempts=0;while(used.has(item.word)&&attempts<deck.length){item=deck[deckIndex++%deck.length];attempts++}used.add(item.word);$("word").textContent=item.word.toLocaleUpperCase("ru-RU");$("categoryHint").textContent=item.category==="Общая"?"Общая категория":item.category}
+function nextTurn(){clearInterval(interval);paused=false;turnPoints=0;remaining=cfg.time;$("pause").textContent="Ⅱ Пауза";$("turnLabel").textContent="Ход "+(turn+1);$("roundLabel").textContent="Раунд "+round+" из 3";$("activeLabel").textContent="Объясняет: "+players[turn%players.length];$("scoreMini").textContent="0 очков за ход";nextWord();updateTimer();interval=setInterval(tick,1000);renderScores()}
+function tick(){if(paused)return;remaining--;updateTimer();if(remaining<=0){clearInterval(interval);openModal("Время вышло!","Ход завершён. Посмотрите результаты хода.",[{label:"Продолжить",action:closeModalAndEnd}])}}
+function updateTimer(){$("timer").textContent="00:"+String(Math.max(0,remaining)).padStart(2,"0");$("timer").classList.toggle("low",remaining<=10);$("timeBar").style.width=(Math.max(0,remaining)/cfg.time*100)+"%"}
+function renderScores(){const root=$("scores");root.innerHTML="";if(cfg.mode==="solo"){scores.forEach((p,i)=>{const row=document.createElement("div");row.className="score-row";row.innerHTML="<span>"+escapeHtml(p.name)+"</span><b>"+p.score+"</b>";root.append(row)})}else{teamScores.forEach((s,i)=>{const row=document.createElement("div");row.className="score-row";row.innerHTML="<span>Команда "+(i+1)+"</span><b>"+s+"</b>";root.append(row)})}}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function correctWord(){turnPoints++;if(cfg.mode==="teams"){teamScores[teamOf[turn]]++;renderScores();nextWord();$("scoreMini").textContent=turnPoints+" очков за ход"}else{const choices=players.map((p,i)=>({label:p+(i===turn?" (объясняет)":"") ,action:()=>{if(i!==turn)scores[i].score++;scores[turn].score++;renderScores();nextWord();$("scoreMini").textContent=turnPoints+" очков за ход";closeModal()}})).filter((_,i)=>i!==turn);openModal("Кто угадал слово?","Выбери игрока — очко получат и он, и объясняющий.",choices)}}
+function skipWord(){nextWord()}
+function endCurrentTurn(){clearInterval(interval);history.push({player:players[turn%players.length],points:turnPoints});turn++;if(turn%players.length===0){round++;if(round>3){finish();return}}nextTurn()}
+function closeModalAndEnd(){closeModal();endCurrentTurn()}
+function openModal(title,desc,choices){const root=$("modalRoot");root.innerHTML='<div class="modal-back"><div class="modal"><h2>'+escapeHtml(title)+'</h2><p class="muted">'+escapeHtml(desc)+'</p><div class="choice-list"></div></div></div>';const list=root.querySelector(".choice-list");choices.forEach(c=>{const b=document.createElement("button");b.textContent=c.label;b.onclick=c.action;list.append(b)})}
+function closeModal(){$("modalRoot").innerHTML=""}
+function finish(){clearInterval(interval);show("results");const final=$("finalScores");final.innerHTML="";let ranking=cfg.mode==="solo"?scores.map(x=>({...x})):teamScores.map((score,i)=>({name:"Команда "+(i+1),score}));ranking.sort((a,b)=>b.score-a.score);$("resultSub").textContent=ranking.length&&ranking[0].score>0?"Победитель: "+ranking[0].name+" — "+ranking[0].score+" очков":"Спасибо за игру!";ranking.forEach((p,i)=>{const row=document.createElement("div");row.className="score-row";row.innerHTML="<span>"+(i===0?"🏆 ":"")+escapeHtml(p.name)+"</span><b>"+p.score+"</b>";final.append(row)})}
+$("start").onclick=startGame;$("correct").onclick=correctWord;$("skip").onclick=skipWord;$("endTurn").onclick=endCurrentTurn;$("pause").onclick=()=>{paused=!paused;$("pause").textContent=paused?"▶ Продолжить":"Ⅱ Пауза"};
+$("again").onclick=startGame;$("back").onclick=()=>{clearInterval(interval);show("setup")};
+</script>
+</body></html>
